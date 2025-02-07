@@ -9,11 +9,9 @@ const appointmentController = {
         const user_id = req.user.id
 
         try {
-            // Verificando se o servico existe
             const service = await Service.findById(service_id);
             if (!service) return res.status(404).json({ message: 'Serviço não encontrado' });
 
-            //Verifica se o horario ja esta ocupado
             const existingAppointment = await Appointment.findByDateTime({date_time, user_id});
           
             if (existingAppointment) return res.status(400).json({ message: 'Horário já ocupado' });
@@ -32,7 +30,7 @@ const appointmentController = {
              foi confirmado para o dia e hora: ${new Date(date_time).toLocaleString()}.\n\n
              Atenciosamente,\nEquipe de Agendamento.`;
             
-            //await sendEmail(user.email, emailSubject, emailText);
+            await sendEmail(user.email, emailSubject, emailText);
 
             res.status(201).json(appointment);
         } catch (error) {
