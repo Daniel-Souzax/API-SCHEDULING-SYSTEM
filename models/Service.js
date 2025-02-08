@@ -1,16 +1,19 @@
 const pool = require('../config/db');
 
 const Service = {
-    async create({name, duration}) {
+    async create({name, duration, user_id}) {
         const { rows } = await pool.query(
-            'INSERT INTO services (name, duration) VALUES ($1, $2) RETURNING *',
-            [name, duration]
+            'INSERT INTO services (name, duration, user_id) VALUES ($1, $2, $3) RETURNING *',
+            [name, duration, user_id]
         );
         return rows[0];
     },
 
-    async findALL() {
-        const { rows } = await pool.query('SELECT * FROM services');
+    async findALL(user_id) {
+        const { rows } = await pool.query(
+            'SELECT * FROM services WHERE user_id = $1',
+            [user_id]
+        );
         return rows
     },
 

@@ -4,8 +4,10 @@ const { login } = require('./authController');
 const serviceController = {
     async create(req, res) {
         const {name, duration } = req.body;
+        const user_id = req.user.id;
         try {
-            const service = await Service.create({ name, duration });
+            const service = await Service.create({ name, duration, user_id });
+
             res.status(201).json(service);
         } catch (error) {
             res.status(500).json({ message: 'Erro ao criar serviço', error })
@@ -13,8 +15,10 @@ const serviceController = {
     },
 
     async findAll(req, res) {
+        const user_id = req.user.id;
+
         try{
-            const services = await Service.findALL();
+            const services = await Service.findALL(user_id);
             res.json(services);
         } catch (error) {
             res.status(500).json({ message: 'Erro ao buscar serviços', error });

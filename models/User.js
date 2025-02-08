@@ -11,6 +11,11 @@ const User = {
         return rows[0];
     },
 
+    async findAll() {
+        const { rows } = await pool.query('SELECT id, name, email FROM users');
+        return rows;
+    },
+
     async findByEmail(email) {
         const { rows } = await pool.query(
             'SELECT * FROM users WHERE email = $1',

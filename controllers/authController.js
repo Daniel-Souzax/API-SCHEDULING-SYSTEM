@@ -21,9 +21,7 @@ const authController = {
 
     async login(req, res) {
         const {email, password } = req.body;   
-        
-        console.log(req.body);
-        
+
         try{
             const user = await User.findByEmail(email);
             if(!user) return res.status(400).json({ message: 'Usuário não encontrado' });

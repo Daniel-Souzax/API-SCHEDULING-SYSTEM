@@ -7,8 +7,9 @@ CREATE TABLE users (
 
 CREATE TABLE services (
     id SERIAL PRIMARY KEY,
+    user_id INT REFERENCES users(id) ON DELETE CASCADE,
     name VARCHAR(100) NOT NULL,
-    duration INT NOT NULL 
+    duration INT NOT NULL,
 );
 
 CREATE TABLE appointments (
